@@ -1,0 +1,23 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/docker-test-443818/my-app', '.']
+
+  # Step 2: Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/docker-test-443818/my-app']
+
+  # Step 3: Deploy the image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - my-app
+      - --image=gcr.io/docker-test-443818/my-app
+      - --platform=managed
+      - --region=asia-east1
+      - --allow-unauthenticated
+
+images:
+  - 'gcr.io/docker-test-443818/my-app'
