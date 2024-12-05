@@ -21,3 +21,6 @@ steps:
 
 images:
   - 'gcr.io/docker-test-443818/my-app'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
